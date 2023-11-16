@@ -1,12 +1,15 @@
-from django.shortcuts import render, redirect
+from typing import Any
+from django.shortcuts import render, redirect, get_object_or_404
 from dbapp import models
 from dbapp import forms
 from django.views import View
 from django.views.generic import ListView, DetailView, FormView, CreateView
 from django.contrib import messages
 from django.contrib.auth.views import LoginView
-from .forms import RegisterForm, LoginForm
-
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.http import Http404
+from django.urls import reverse
 
 # Create your views here.
 
@@ -21,6 +24,15 @@ class AddDosarForm(CreateView):
     model = models.cerere_de_finantare
     sucess_url = "/"
 
+class UserProfileDV(DetailView):
+    model = models.UserProfile
+    template_name = 'user_profile_detail.html'
+    context_object_name = 'user'
+    
+    def get_object(self, queryset=None):
+        return models.UserProfile.objects.get(user=self.request.user)
+    
+    
 class CreateUser(View):
     form_class = forms.UserRegisterForm
     initial = {'key': 'value'}
@@ -58,9 +70,29 @@ class CustomLoginView(LoginView):
 
         # else browser session will be as long as the session cookie time "SESSION_COOKIE_AGE" defined in settings.py
         return super(CustomLoginView, self).form_valid(form)
-    
-class UserPage(ListView):
-    model = models.cerere_de_finantare
-    template_name = 'user.html'
-    context_object_name = 'dosare'
 
+@login_required
+def adauga_dosar(request):
+    if request.method == "POST":
+        form = forms.UserProfileForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = request.user
+            post.save()
+            return redirect(reverse('profile', args=[request.user.id]))
+    else:
+        form = models.cerere_de_finantare()
+    return render(request, 'add.html', {'form':form})
+
+@login_required
+def profile(request, user_id=None):
+    if user_id is not None:
+        if request.user.id != int(user_id):
+            raise Http404('Nu ai permisiune pentru a accesa aceasta pagina')
+        user = get_object_or_404(User, pk=user_id)
+    else:
+        user = request.user
+    user_profile = get_object_or_404(models.UserProfile, user=user)
+    user_posts = models.cerere_de_finantare.objects.filter(user=request.user)
+    return render(request, 'profile.html',{'user_posts': user_posts})
+    #return render(request, 'profile.html', {'user_profile': user_profile})

@@ -3,15 +3,14 @@
 {% block content %}
 
 {% if form.errors %}
-<p>Your username and password didn't match. Please try again.</p>
+<p>Username-ul si parola nu se potrivesc.</p>
 {% endif %}
 
 {% if next %}
     {% if user.is_authenticated %}
-    <p>Your account doesn't have access to this page. To proceed,
-    please login with an account that has access.</p>
+    <p>Contul dumneavoastra nu are acces la aceasta pagina. Va rugam sa va conectati cu un cont care are acces.</p>
     {% else %}
-    <p>Please login to see this page.</p>
+    <p>Va rugam sa va conectati pentru a avea acces la aceasta pagina.</p>
     {% endif %}
 {% endif %}
 

@@ -71,3 +71,9 @@ class Autentificare(AuthenticationForm):
     class Meta:
         model = User
         fields = ['username', 'password', 'remember_me']
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = models.cerere_de_finantare
+        exclude = ['user']

@@ -1,0 +1,14 @@
+{% extends 'header.html' %}
+
+{% block content %}
+  <h1>{{ user.username }}'s Profile</h1>
+
+  <!-- Display user information or other profile details as needed -->
+
+  <h2>Dosare:</h2>
+  {% for submissions in user_submissions %}
+    <p>{{ submission.titlul_proiectului}}:{{submission.field_value}}</p>
+    <p>{{ submission.programe}}:{{submission.field_value}}</p>
+    <!-- Display other post details as needed -->
+  {% endfor %}
+{% endblock %}
