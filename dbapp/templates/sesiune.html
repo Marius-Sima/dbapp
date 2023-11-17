@@ -1,0 +1,14 @@
+{% extends 'header.html' %}
+{% block content %}
+{% if messages %}
+  {% for message in messages %}
+    {{ message }}
+  {% endfor %}
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_table }}
+    <button type="submit">Seteaza Sesiunea</button>
+</form>
+
+{% endblock %}

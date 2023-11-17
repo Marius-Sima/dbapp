@@ -1,0 +1,22 @@
+{% extends "header.html" %}
+{% block title %}Detalii Dosar{% endblock title %}
+{% block content %}
+  <div class="container my-5">
+    <h1>Detalii Dosar</h1>
+    <div class="card mb-3">
+      <div class="card-body">
+        <h5 class="card-title">{{ dosar.titlul_proiectului }}</h5>
+        <p class="card-text">Programe: {{ dosar.programe }}</p>
+        <p class="card-text">Locul Derulare: {{ dosar.descriere }}</p>
+        <p class="card-text">Numele Solicitantului: {{ dosar.numele_solicitantului }}</p>
+        <p class="card-text">Locul Derulare: {{ dosar.locul_derulare }}</p>
+
+        {% if dosar.uploaded_file %}
+          <p>Uploaded File: <a href="{% url 'display_file' user_id=user_profile.user.id %}">{{ dosar.uploaded_file.name }}</a></p>
+        {% else %}
+          <p>No uploaded file associated with this dosar.</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}
