@@ -27,7 +27,7 @@ class cerere_de_finantare(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
- 
+    uploaded_file = models.FileField(upload_to='user_uploads/', blank=True, null=True)
     bio = models.TextField(blank=True)
 
     def __str__(self):

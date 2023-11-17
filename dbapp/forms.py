@@ -1,6 +1,8 @@
+#models and forms
 from django import forms
-from django.contrib.auth.base_user import AbstractBaseUser
 from dbapp import models
+#django stuff
+from django.contrib.auth.base_user import AbstractBaseUser
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
@@ -82,3 +84,7 @@ class UserProfileForm(forms.ModelForm):
             'perioada_incepere':forms.DateInput(attrs={'type':'date'}),
             'perioada_incheiere':forms.DateInput(attrs={'type':'date'}),
         }
+class FileUploadForm(forms.ModelForm):
+    class Meta:
+        model = models.UserProfile
+        fields = ['uploaded_file']

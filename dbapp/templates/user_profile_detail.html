@@ -3,12 +3,15 @@
 {% block content %}
   <h1>{{ user.user.username }}'s Profile</h1>
 
-  <!-- Display user information or other profile details as needed -->
+  <!-- <a href="{{ user.uploaded_file.url }}" target="_blank">-->
 
   <h2>Dosare:</h2>
   {% for post in user_posts %}
     <p>{{ post.titlul_proiectului}}</p>
     <p>{{ post.programe}}</p>
-    <!-- Display other post details as needed -->
+
   {% endfor %}
+  {%if user.uploaded_file %}
+  <p>Uploaded File: <a href="{% url 'display_file' user_id=request.user.id %}">{{ user.uploaded_file.name }}</a></p>
+  {% endif %}
 {% endblock %}
