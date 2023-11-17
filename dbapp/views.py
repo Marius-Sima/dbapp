@@ -1,6 +1,7 @@
 from typing import Any
 from django.shortcuts import render, redirect, get_object_or_404
 from dbapp import models
+from .models import cerere_de_finantare as cerere
 from dbapp import forms
 from django.views import View
 from django.views.generic import ListView, DetailView, FormView, CreateView
@@ -28,9 +29,17 @@ class UserProfileDV(DetailView):
     model = models.UserProfile
     template_name = 'user_profile_detail.html'
     context_object_name = 'user'
-    
+
     def get_object(self, queryset=None):
-        return models.UserProfile.objects.get(user=self.request.user)
+        user_id = self.kwargs.get('pk')
+        user_profile = get_object_or_404(models.UserProfile, user__id=user_id)
+        return user_profile
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_posts = cerere.objects.filter(user=self.object.user)
+        context['user_posts'] = user_posts
+        return context
     
     
 class CreateUser(View):

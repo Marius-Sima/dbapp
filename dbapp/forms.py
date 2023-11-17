@@ -10,12 +10,12 @@ class DosarForm(forms.ModelForm):
         fields = ["numele_solicitantului", "titlul_proiectului", "programe", "locul_derulare"]
 
 class UserRegisterForm(UserCreationForm):
-    prenume = forms.CharField(max_length=100,
+    first_name = forms.CharField(max_length=100,
                                  required=True,
                                  widget=forms.TextInput(attrs={'placeholder': 'Prenume',
                                                                'class': 'form-control',
                                                                }))
-    nume = forms.CharField(max_length=100,
+    name = forms.CharField(max_length=100,
                                 required=True,
                                 widget=forms.TextInput(attrs={'placeholder': 'Nume',
                                                               'class': 'form-control',
@@ -42,7 +42,7 @@ class UserRegisterForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ['prenume', 'nume', 'username', 'email', 'password1', 'password2']
+        fields = ['first_name', 'name', 'username', 'email', 'password1', 'password2']
 
 '''
         def save(self, commit=True):
@@ -77,3 +77,8 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = models.cerere_de_finantare
         exclude = ['user']
+        fields =['numele_solicitantului', 'titlul_proiectului', 'programe', 'perioada_incepere', 'perioada_incheiere']
+        widgets = {
+            'perioada_incepere':forms.DateInput(attrs={'type':'date'}),
+            'perioada_incheiere':forms.DateInput(attrs={'type':'date'}),
+        }

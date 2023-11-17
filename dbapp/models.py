@@ -17,17 +17,17 @@ class cerere_de_finantare(models.Model):
         ('societate','Societate Civila')]
     programe = models.CharField(max_length=30, choices=programe_choices)
     locul_derulare = models.TextField(help_text="Adresa, cod postal, Regiune, Localitate, Tara")
-    #perioada_incepere = models.DateTimeField()
-    #perioada_incheiere = models.DateField()
+    perioada_incepere = models.DateField()
+    perioada_incheiere = models.DateField()
     def __str__(self):
-        return f'Numele Solicitantului {self.numele_solicitantului}, titlul proiectului {self.titlul_proiectului}, locul de derulare {self.locul_derulare}'
+        return f'User: {self.user} Numele Solicitantului: {self.numele_solicitantului}, Titlul proiectului: {self.titlul_proiectului}, Locul de derulare {self.locul_derulare}'
 
     class Meta:
         db_table = "Cerere_de_Finantare"
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
+ 
     bio = models.TextField(blank=True)
 
     def __str__(self):
