@@ -34,7 +34,7 @@ class welcome(View):
     def get(self, request, *args, **kwargs):
         return render(request, self.template_name)
 
-
+''' #UserProfile trebuie modificat (erori in el) sau poate scos definitiv, inlocuit cu alt View
 class UserProfileDV(DetailView):
     model = models.UserProfile
     template_name = 'user_profile_detail.html'
@@ -50,7 +50,7 @@ class UserProfileDV(DetailView):
         user_posts = cerere.objects.filter(user=self.object.user)
         context['user_posts'] = user_posts
         return context
-    
+    '''
 class CreateUser(View):
     form_class = forms.UserRegisterForm
     initial = {'key': 'value'}

@@ -67,7 +67,7 @@ class Autentificare(AuthenticationForm):
         fields = ['username', 'password', 'remember_me']
 
 
-class UserProfileForm(forms.ModelForm):
+class UserProfileForm(forms.ModelForm): # de revizuit
     class Meta:
         model = models.cerere_de_finantare
         exclude = ['user']
@@ -76,7 +76,7 @@ class UserProfileForm(forms.ModelForm):
             'perioada_incepere':forms.DateInput(attrs={'type':'date'}),
             'perioada_incheiere':forms.DateInput(attrs={'type':'date'}),
         }
-class FileUploadForm(forms.ModelForm):
+class FileUploadForm(forms.ModelForm):  #posibil sa scot asta odata cu uploaded_file field din UserProfile model
     class Meta:
         model = models.UserProfile
         fields = ['uploaded_file']

@@ -29,7 +29,7 @@ class cerere_de_finantare(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    uploaded_file = models.FileField(upload_to='user_uploads/', blank=True, null=True)
+    uploaded_file = models.FileField(upload_to='user_uploads/', blank=True, null=True) # posibil sa-l scot complet si sa adaug filefield in cerere
     bio = models.TextField(blank=True)
     cerere_de_finantare = models.ForeignKey(cerere_de_finantare, on_delete=models.SET_NULL, null=True, blank=True)
 
