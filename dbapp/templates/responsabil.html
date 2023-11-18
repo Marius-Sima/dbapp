@@ -1,0 +1,40 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="container mt-3">
+    <form method="get" class="mb-3">
+        <div class="input-group">
+            <input type="text" class="form-control" name="user" placeholder="Search by User">
+            <button type="submit" class="btn btn-outline-secondary">Search</button>
+        </div>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">User</th>
+                <th scope="col">Numele Solicitantului</th>
+                <th scope="col">Titlul Proiectului</th>
+                <th scope="col">Programe</th>
+                <th scope="col">Locul Derulare</th>
+                <th scope="col">Descriere</th>
+                <th scope="col">Perioada Incepere</th>
+                <th scope="col">Perioada Incheiere</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dosar in dosare %}
+            <tr>
+                <td>{{ dosar.user }}</td>
+                <td>{{ dosar.numele_solicitantului }}</td>
+                <td>{{ dosar.titlul_proiectului }}</td>
+                <td>{{ dosar.programe }}</td>
+                <td>{{ dosar.locul_derulare }}</td>
+                <td>{{ dosar.descriere }}</td>
+                <td>{{ dosar.perioada_incepere }}</td>
+                <td>{{ dosar.perioada_incheiere }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

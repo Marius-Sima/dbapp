@@ -1,5 +1,8 @@
 import os
 import logging
+from typing import Any
+
+from django.db.models.query import QuerySet
 #models si forms
 from dbapp import models
 from .models import cerere_de_finantare as cerere
@@ -7,7 +10,9 @@ from .forms import FileUploadForm as FileUp
 from dbapp import forms
 
 from datetime import datetime
-
+#decoratori
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import user_passes_test
 #django stuff
 from django.views import View
 from django.shortcuts import render, redirect, get_object_or_404
@@ -103,7 +108,7 @@ def adauga_dosar(request):
                 profile.uploaded_file = upload_form.cleaned_data['uploaded_file']
                 profile.cerere_de_finantare = cerere_instance # legatura dintre cerere si userprofile
                 profile.save()
-                upload_form.save() 
+                upload_form.save()
       
                 return redirect(reverse('profile', args=[request.user.id]))
         else:
@@ -179,3 +184,18 @@ def dosar_detail(request, user_id, dosar_id):
     }
 
     return render(request, 'dosar_detail.html', context)
+
+@method_decorator(user_passes_test(lambda u: u.is_staff), name='dispatch')
+class responsabil_dosar(ListView):
+    model = cerere
+    template_name = 'responsabil.html'
+    context_object_name = 'dosare'
+    
+    def get_queryset(self) -> QuerySet[Any]:
+        query_params = self.request.GET
+        user_query = query_params.get('user','')
+        
+        # pt mai multe filre adaug aici
+        queryset = cerere.objects.filter(user__username__icontains=user_query)
+        return queryset
+

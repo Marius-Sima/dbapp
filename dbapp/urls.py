@@ -17,6 +17,7 @@ urlpatterns = [
     path('download_file/<int:user_id>/', views.download_file, name='download_file'),
     path('sesiune/', views.SesiuneView.as_view(), name='sesiune'),
     path('user/<int:user_id>/dosar/<int:dosar_id>/', views.dosar_detail, name='dosar_detail'),
+    path('responsabil/', views.responsabil_dosar.as_view(), name='responsabil')
 ]
 
 if settings.DEBUG: # pt admin (NUMAI IN DEVELOPMENT)
